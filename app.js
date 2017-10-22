@@ -15,6 +15,20 @@ app.listen(PORT, function () {
 // handler receiving messages
 app.post('/', function (req, res) {
     console.log(JSON.stringify(req.body, null,2))
+
+    let events=req.body.events
+    events.forEach((event) => {
+        let replyToken = event.replyToken
+        let type = event.message.type
+        if(type == 'text') {
+            let text = event.message.text
+            sendMessage(replyToken, text)
+        } 
+        else {
+            sendMessage(replyToken, type)
+        }
+    })
+
     res.send()
 })
 
